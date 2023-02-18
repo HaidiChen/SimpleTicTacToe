@@ -1,15 +1,13 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TicTacToe from './tic-tac-toe/TicTacToe';
 
-function App() {
+
+export default function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -19,8 +17,10 @@ function App() {
           Learn React
         </a>
       </header>
+
+      <header className="game">
+        <p><TicTacToe /></p>
+      </header>
     </div>
   );
 }
-
-export default App;

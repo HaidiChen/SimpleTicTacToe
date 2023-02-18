@@ -1,7 +1,11 @@
 import { useState } from 'react';
+
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
+
 import Board from './Board';
+
 
 export default function TicTacToe() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -27,7 +31,10 @@ export default function TicTacToe() {
         <Board xIsNext={xIsNext} boardCells={currentBoardCells} onPlay={handlePlay} />
       </Grid>
       <Grid>
-        <ol>{renderedHistoryMoves}</ol>
+        <Paper>
+          History Moves
+          {renderedHistoryMoves}
+        </Paper>
       </Grid>
     </Grid>
   );
@@ -51,5 +58,5 @@ function renderHistoryMoves(history: Array<Array<string | null>>, jumpTo: any) {
     );
   });
 
-  return renderedHistoryMoves;
+  return <ol>{renderedHistoryMoves}</ol>;
 }

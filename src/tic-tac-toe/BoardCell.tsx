@@ -10,7 +10,7 @@ export default function BoardCell(props: BoardCellProperties) {
   return (
     <Button sx={{ width: 50, height: 50 }}
             size="large"
-            variant="outlined"
+            variant="contained"
             onClick={props.onSquareClick}
     >
       {props.value}

@@ -1,6 +1,7 @@
-import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
+
 import BoardCell from './BoardCell';
 
 
@@ -11,25 +12,40 @@ interface BoardProperties {
 }
 
 export default function Board(props: BoardProperties) {
-  const gameStatus = getGameStatus(props);
+  const renderedgameStatus = renderGameStatus(props);
   const renderedBoardCells = renderBoardCells(props);
 
   return (
     <>
       <Container>
-        <Paper sx={{ marginBottom: 2 }}>{gameStatus}</Paper>
-
-        {renderedBoardCells}
+        <Paper sx={{ background: "#282c34", color: "#61dafb"}}>
+          {renderedgameStatus}
+          {renderedBoardCells}
+        </Paper>
       </Container>
     </>
   );
 }
 
-function getGameStatus(props: BoardProperties) {
+function renderGameStatus(props: BoardProperties) {
   const winner = calculateWinner(props.boardCells);
   const nextPlayer = props.xIsNext ? "X" : "O";
+  const tied = props.boardCells.filter((boardCellValue) => {
+    return boardCellValue === "X" || boardCellValue === "O";
+  }).length === 9;
 
-  return winner ? "Winner: " + winner : "Next Player: " + nextPlayer;
+  let description;
+  if (winner) {
+    description = "Winner: " + winner;
+  }
+  else if (tied) {
+    description = "Tied. Please restart the game.";
+  }
+  else {
+    description = "Next Player: " + nextPlayer;
+  }
+
+  return <Paper sx={{ marginBottom: 2 }}>{description}</Paper>;
 }
 
 function calculateWinner(boardCells: Array<string | null>) {
@@ -60,13 +76,13 @@ function renderBoardCells(props: BoardProperties) {
     const end = (index + 1) * 3;
 
     return (
-      <Grid container spacing={1}>
+      <Grid container rowSpacing={1} columnSpacing={0.5}>
         {boardCellById.slice(end - 3, end)}
       </Grid>
     );
   });
 
-  return renderedGrid;
+  return <Container>{renderedGrid}</Container>;
 }
 
 function handleClick(i: number, props: BoardProperties) {
